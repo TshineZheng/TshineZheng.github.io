@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="有时候可能需要测试一些东西，总是拿家里的路由器开刀的话会很危险，一不小心，家里全断网了，悲剧……还有一次不小打错了命令rm -r ….你懂的。这没什么，最麻烦的是要重装系统，各种配置，大半天就这么过去了。又不想为了这么点事再去买一台路由器，所以就萌生了用虚拟机安装OpenWrt的想法，想起以前开发Android的时候就用过VirtualBox虚拟Androidx86，那叫一个快啊，比Google提">
+<meta name="keywords" content="OpenWrt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VirtualBox安装OpenWrt">
+<meta property="og:url" content="http://blog.tshine.me/virtualbox-install-openwrt.html">
+<meta property="og:site_name" content="Tshine&#39;s blog">
+<meta property="og:description" content="有时候可能需要测试一些东西，总是拿家里的路由器开刀的话会很危险，一不小心，家里全断网了，悲剧……还有一次不小打错了命令rm -r ….你懂的。这没什么，最麻烦的是要重装系统，各种配置，大半天就这么过去了。又不想为了这么点事再去买一台路由器，所以就萌生了用虚拟机安装OpenWrt的想法，想起以前开发Android的时候就用过VirtualBox虚拟Androidx86，那叫一个快啊，比Google提">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualboxnewopenwrt.jpg">
+<meta property="og:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualboxnewopenwrt.jpg">
+<meta property="og:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualbox_network1_setting.jpg">
+<meta property="og:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualbox_network2_setting.jpg">
+<meta property="og:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualbox_com1_setting.jpg">
+<meta property="og:updated_time" content="2019-07-27T04:20:11.848Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VirtualBox安装OpenWrt">
+<meta name="twitter:description" content="有时候可能需要测试一些东西，总是拿家里的路由器开刀的话会很危险，一不小心，家里全断网了，悲剧……还有一次不小打错了命令rm -r ….你懂的。这没什么，最麻烦的是要重装系统，各种配置，大半天就这么过去了。又不想为了这么点事再去买一台路由器，所以就萌生了用虚拟机安装OpenWrt的想法，想起以前开发Android的时候就用过VirtualBox虚拟Androidx86，那叫一个快啊，比Google提">
+<meta name="twitter:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualboxnewopenwrt.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://blog.tshine.me/virtualbox-install-openwrt">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>VirtualBox安装OpenWrt | Tshine's blog</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f040c18a472a04e56ac5fd8c11506de8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tshine's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">浪漫的人不会贫穷</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-留言">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/guestbook/" rel="section"><i class="menu-item-icon fa fa-fw fa-comment"></i> <br>留言</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/TshineZheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.tshine.me/virtualbox-install-openwrt.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tshine Zheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tshine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">VirtualBox安装OpenWrt
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2015-06-19 17:40:12" itemprop="dateCreated datePublished" datetime="2015-06-19T17:40:12+08:00">2015-06-19</time>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/OpenWrt/" itemprop="url" rel="index"><span itemprop="name">OpenWrt</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/virtualbox-install-openwrt.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/virtualbox-install-openwrt.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/virtualbox-install-openwrt.html" class="post-meta-item leancloud_visitors" data-flag-title="VirtualBox安装OpenWrt">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>有时候可能需要测试一些东西，总是拿家里的路由器开刀的话会很危险，一不小心，家里全断网了，悲剧……还有一次不小打错了命令rm -r ….你懂的。这没什么，最麻烦的是要重装系统，各种配置，大半天就这么过去了。又不想为了这么点事再去买一台路由器，所以就萌生了用虚拟机安装OpenWrt的想法，想起以前开发Android的时候就用过VirtualBox虚拟Androidx86，那叫一个快啊，比Google提供的那个模拟器块至少10倍以上的速度，比真机还快。 有点扯远了，下面是VirualBox安装OpenWrt的方法。</p>
+<a id="more"></a>
+
+<h1 id="1、准备工作"><a href="#1、准备工作" class="headerlink" title="1、准备工作"></a>1、准备工作</h1><p>VirtualBox用的最新的版本4.3.28，官网下载即可。 OpenWrt固件用的是14.07的x86版本，到以下地址 <a href="https://downloads.openwrt.org/barrier_breaker/14.07/x86/generic/" target="_blank" rel="noopener">https://downloads.openwrt.org/barrier_breaker/14.07/x86/generic/</a> 下载其中的<a href="https://downloads.openwrt.org/barrier_breaker/14.07/x86/generic/openwrt-x86-generic-combined-ext4.img.gz" target="_blank" rel="noopener">openwrt-x86-generic-combined-ext4.img.gz</a> 下载完成解压得到openwrt-x86-generic-combined-ext4.img文件，最好放到VirtualBox的安装目录，方便下面执行转换命令。 在VirualBox安装目录下执行</p>
+<p>VBoxManager.exe convertfromraw –format VDI openwrt-x86-generic-combined-ext4.img openwrt.vdi</p>
+<p>执行完成之后会在当前目录下生成openwrt.vdi，这一步是将img转换成VirtualBox可用的硬盘镜像.vdi文件。</p>
+<h1 id="2、安装OpenWrt到VirtualBox"><a href="#2、安装OpenWrt到VirtualBox" class="headerlink" title="2、安装OpenWrt到VirtualBox"></a>2、安装OpenWrt到VirtualBox</h1><p>首先新建一个Linux2.6 32位的虚拟机 </p>
+<p><img src="virtualbox-install-openwrt/virtualboxnewopenwrt.jpg" alt></p>
+<p>后面一直默认设置下一步 到虚拟硬盘这步选择“使用已有的虚拟硬盘文件”，也是就选择在准备工作中生成的openwrt.vdi。 </p>
+<p><img src="virtualbox-install-openwrt/virtualboxnewopenwrt.jpg" alt></p>
+<p>最后点击创建按钮，虚拟机就创建好了。</p>
+<h1 id="3、配置虚拟机"><a href="#3、配置虚拟机" class="headerlink" title="3、配置虚拟机"></a>3、配置虚拟机</h1><p>在主界面选中创建好的虚拟机，点击设置按钮，在设置界面选中网络，启用网卡1和网卡2 将网卡1的连接方式设置为“Host-Only模式”，界面名称设置为VirtualBox Host-Only Ethernet Adapter 网卡2的连接方式设置为“网络地地址转换(NAT)” </p>
+<p><img src="virtualbox-install-openwrt/virtualbox_network1_setting.jpg" alt><br><img src="virtualbox-install-openwrt/virtualbox_network2_setting.jpg" alt></p>
+<p>再开启一个串口，选择串口，将端口1启用</p>
+<p><img src="virtualbox-install-openwrt/virtualbox_com1_setting.jpg" alt></p>
+<p> 做完这些就可以启动虚拟机了，在VirtualBox主界面选中建立的虚拟机，点启动按钮。 在启动目录选择OpenWrt就可以进入系统了，差不多看到字幕不滚动时，记得回车，就会进入OpenWrt的终端模式。</p>
+<h3 id="TIPS："><a href="#TIPS：" class="headerlink" title="TIPS："></a>TIPS：</h3><p>这一步如果虚拟机出现Error In supR3HardenedWinReSpawn错误提示，可能是因为vboxdrv服务没有安装或没有成功启动，64位的系统经常出现这样的情况，可以找到VirtualBox的安装目录下的drivers/vboxdrv/文件夹，右键VBoxDrv.inf文件，选择安装，然后重启VirtualBox，应该就可以解决。</p>
+<h1 id="4、配置网络"><a href="#4、配置网络" class="headerlink" title="4、配置网络"></a>4、配置网络</h1><p>刚进入系统应该是不能访问网络的，需要对网络进行配置。 在OpenWrt终端输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/config/network</span><br></pre></td></tr></table></figure>
+
+<p>关键修改下面高亮的部分，没有的话就添加，其中的config interface ‘wan’一般是没有的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">config interface &apos;loopback&apos;</span><br><span class="line">        option ifname &apos;lo&apos;</span><br><span class="line">        option proto &apos;static&apos;</span><br><span class="line">        option ipaddr &apos;127.0.0.1&apos;</span><br><span class="line">        option netmask &apos;255.0.0.0&apos;</span><br><span class="line"></span><br><span class="line">config interface &apos;lan&apos;</span><br><span class="line">        option ifname &apos;eth0&apos;</span><br><span class="line">        option type &apos;bridge&apos;</span><br><span class="line">        option proto &apos;dhcp&apos;</span><br><span class="line">        option ipaddr &apos;192.168.1.1&apos;</span><br><span class="line">        option netmask &apos;255.255.255.0&apos;</span><br><span class="line">        option ip6assign &apos;60&apos;</span><br><span class="line"></span><br><span class="line">config interface &apos;wan6&apos;</span><br><span class="line">        option ifname &apos;@wan&apos;</span><br><span class="line">        option proto &apos;dhcpv6&apos;</span><br><span class="line"></span><br><span class="line">config globals &apos;globals&apos;</span><br><span class="line">        option ula_prefix &apos;fdf7:39d5:0d8f::/48&apos;</span><br><span class="line"></span><br><span class="line">config interface &apos;wan&apos;</span><br><span class="line">        option ifname &apos;eth1&apos;</span><br><span class="line">        option proto &apos;dhcp&apos;</span><br></pre></td></tr></table></figure>
+
+<p>保存以后，重启network</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/network restart</span><br></pre></td></tr></table></figure>
+
+<p>然后ping下网外，看是否可以ping通，比如ping baidu.com 接下来通过ifconfig命令看看路由器的lan口ip是多少，由于这里使用的是Host-Only模式一般是192.168.56.101。 在浏览器里输入192.168.56.101就能进入OpenWrt的后台配置界面。 剩下的就和其他OpenWrt没有什么区别了。</p>
+<h3 id="Tips："><a href="#Tips：" class="headerlink" title="Tips："></a>Tips：</h3><p>不知为啥x86的软件源好慢，要更新下载点东西特别慢，家里路由器也是用的官方源都不会这样，可以考虑替换成三方源，具体看<a href="http://www.right.com.cn/forum/forum.php?mod=viewthread&tid=162641&orderby=dateline" target="_blank" rel="noopener">这里</a> ，我已经用了，感谢这位网友的贡献！</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Tshine Zheng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="Tshine Zheng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Tshine Zheng</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="http://blog.tshine.me/virtualbox-install-openwrt.html" title="VirtualBox安装OpenWrt">http://blog.tshine.me/virtualbox-install-openwrt.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/OpenWrt/" rel="tag"># OpenWrt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-tools-and-command.html" rel="next" title="Linux好用工具&命令">
+                <i class="fa fa-chevron-left"></i> Linux好用工具&命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/firefox-shadowsocks-foxyproxy-gfwlist.html" rel="prev" title="Firefox+FoxyProxy自动代理">
+                Firefox+FoxyProxy自动代理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+  <p class="site-author-name" itemprop="name">Tshine Zheng</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/TshineZheng" title="GitHub &rarr; https://github.com/TshineZheng" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:gtshine@gmail.com" title="E-Mail &rarr; mailto:gtshine@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、准备工作"><span class="nav-number">1.</span> <span class="nav-text">1、准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、安装OpenWrt到VirtualBox"><span class="nav-number">2.</span> <span class="nav-text">2、安装OpenWrt到VirtualBox</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、配置虚拟机"><span class="nav-number">3.</span> <span class="nav-text">3、配置虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TIPS："><span class="nav-number">3.0.1.</span> <span class="nav-text">TIPS：</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#4、配置网络"><span class="nav-number">4.</span> <span class="nav-text">4、配置网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tips："><span class="nav-number">4.0.1.</span> <span class="nav-text">Tips：</span></a></li></ol></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2011 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tshine Zheng</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" rel="external nofollow" href="https://pages.coding.me"><b>Coding Pages</b></a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: false,
+    appId: 'Tp4HMrirjYpUVRmeqoCIXrPh-gzGzoHsz',
+    appKey: 'dV4EzUxh77uKd0q1sCYaVMTR',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>

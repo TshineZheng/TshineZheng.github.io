@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="早就听说云风大大的skynet框架，一直找不到很好的时间研究，昨天下了代码和范例，一遍编译跑通了，几乎没遇到什么问题，不愧是我看好的男人。-0- 下面分析一下范例代码，由于本人之前对lua并不是很了解，几乎是现学现卖的，所以文章会有些啰嗦，不过这样也许也更适合和我一样的初学者呢？范例github地址：https://github.com/cloudwu/skynet_sample">
+<meta name="keywords" content="Lua,Skynet,游戏服务器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="skynet范例研究--客户端">
+<meta property="og:url" content="http://blog.tshine.me/skynet-sample-client.html">
+<meta property="og:site_name" content="Tshine&#39;s blog">
+<meta property="og:description" content="早就听说云风大大的skynet框架，一直找不到很好的时间研究，昨天下了代码和范例，一遍编译跑通了，几乎没遇到什么问题，不愧是我看好的男人。-0- 下面分析一下范例代码，由于本人之前对lua并不是很了解，几乎是现学现卖的，所以文章会有些啰嗦，不过这样也许也更适合和我一样的初学者呢？范例github地址：https://github.com/cloudwu/skynet_sample">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-27T04:20:11.848Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="skynet范例研究--客户端">
+<meta name="twitter:description" content="早就听说云风大大的skynet框架，一直找不到很好的时间研究，昨天下了代码和范例，一遍编译跑通了，几乎没遇到什么问题，不愧是我看好的男人。-0- 下面分析一下范例代码，由于本人之前对lua并不是很了解，几乎是现学现卖的，所以文章会有些啰嗦，不过这样也许也更适合和我一样的初学者呢？范例github地址：https://github.com/cloudwu/skynet_sample">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://blog.tshine.me/skynet-sample-client">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>skynet范例研究--客户端 | Tshine's blog</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f040c18a472a04e56ac5fd8c11506de8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tshine's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">浪漫的人不会贫穷</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-留言">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/guestbook/" rel="section"><i class="menu-item-icon fa fa-fw fa-comment"></i> <br>留言</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/TshineZheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.tshine.me/skynet-sample-client.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tshine Zheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tshine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">skynet范例研究--客户端
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-10-21 19:41:53" itemprop="dateCreated datePublished" datetime="2016-10-21T19:41:53+08:00">2016-10-21</time>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Skynet/" itemprop="url" rel="index"><span itemprop="name">Skynet</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/skynet-sample-client.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/skynet-sample-client.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/skynet-sample-client.html" class="post-meta-item leancloud_visitors" data-flag-title="skynet范例研究--客户端">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>早就听说云风大大的skynet框架，一直找不到很好的时间研究，昨天下了代码和范例，一遍编译跑通了，几乎没遇到什么问题，不愧是我看好的男人。-0- 下面分析一下范例代码，由于本人之前对lua并不是很了解，几乎是现学现卖的，所以文章会有些啰嗦，不过这样也许也更适合和我一样的初学者呢？<br>范例github地址：<a href="https://github.com/cloudwu/skynet_sample" target="_blank" rel="noopener">https://github.com/cloudwu/skynet_sample</a></p>
+<a id="more"></a>
+
+<h1 id="socket链接封装"><a href="#socket链接封装" class="headerlink" title="socket链接封装"></a>socket链接封装</h1><hr>
+<p><strong>文件：simplesocket.lua</strong></p>
+<h2 id="声明定义"><a href="#声明定义" class="headerlink" title="声明定义"></a>声明定义</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> lsocket = <span class="built_in">require</span> <span class="string">"lsocket"</span>       <span class="comment">-- 以 lsocket 为基础进行封装.</span></span><br><span class="line"><span class="keyword">local</span> socket = &#123;&#125;                       <span class="comment">-- 声明一个table用来保存的封装函数</span></span><br><span class="line"><span class="keyword">local</span> fd                                <span class="comment">-- lsocket 保存连接对象</span></span><br><span class="line"><span class="keyword">local</span> message                           <span class="comment">-- 接收消息寸在这个变量里</span></span><br><span class="line">socket.<span class="built_in">error</span> = <span class="built_in">setmetatable</span>(&#123;&#125;, &#123; <span class="built_in">__tostring</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span> <span class="keyword">return</span> <span class="string">"\[socket error\]"</span> <span class="keyword">end</span> &#125; )</span><br><span class="line">                                        <span class="comment">-- 设置默认连接出错时调用的函数，错误以__tostring字符串形式显示</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="连接函数"><a href="#连接函数" class="headerlink" title="连接函数"></a>连接函数</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">socket.connect</span><span class="params">(addr, port)</span></span></span><br><span class="line">	<span class="built_in">assert</span>(fd == <span class="literal">nil</span>)                   <span class="comment">-- 保证链接对象仅生成一次，只链接一次</span></span><br><span class="line">	fd = lsocket.connect(addr, port)    <span class="comment">-- 开始连接服务器</span></span><br><span class="line">	<span class="keyword">if</span> fd == <span class="literal">nil</span> <span class="keyword">then</span>                   <span class="comment">-- 如果创建连接出错则报错</span></span><br><span class="line">		<span class="built_in">error</span>(socket.<span class="built_in">error</span>)</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	lsocket.<span class="built_in">select</span>(<span class="literal">nil</span>, &#123;fd&#125;)           <span class="comment">-- 获取连接状态</span></span><br><span class="line">	<span class="keyword">local</span> ok, errmsg = fd:<span class="built_in">status</span>()</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> ok <span class="keyword">then</span>                      <span class="comment">-- 若连接不正常出错则报错</span></span><br><span class="line">		<span class="built_in">error</span>(socket.<span class="built_in">error</span>)</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	message = <span class="string">""</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="链接状态函数"><a href="#链接状态函数" class="headerlink" title="链接状态函数"></a>链接状态函数</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 此处为判断是否链接中</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">socket.isconnect</span><span class="params">(ti)</span></span></span><br><span class="line">	<span class="keyword">local</span> rd, wt = lsocket.<span class="built_in">select</span>(<span class="literal">nil</span>, &#123; fd &#125;, ti)</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">next</span>(wt) ~= <span class="literal">nil</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭链接函数"><a href="#关闭链接函数" class="headerlink" title="关闭链接函数"></a>关闭链接函数</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">socket.close</span><span class="params">()</span></span></span><br><span class="line">	fd:<span class="built_in">close</span>()</span><br><span class="line">	fd = <span class="literal">nil</span></span><br><span class="line">	message = <span class="literal">nil</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="读取链接数据函数"><a href="#读取链接数据函数" class="headerlink" title="读取链接数据函数"></a>读取链接数据函数</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 死循环不断读取连接数据</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">socket.read</span><span class="params">(ti)</span></span></span><br><span class="line">	<span class="keyword">while</span> <span class="literal">true</span> <span class="keyword">do</span></span><br><span class="line">		<span class="keyword">local</span> ok, msg, n = <span class="built_in">pcall</span>(<span class="built_in">string</span>.<span class="built_in">unpack</span>, <span class="string">"&gt;s2"</span>, message)  <span class="comment">-- 从链接读取到的数据为二进制数据，这里调用string.unpack将消息解包，解包后的数据保存在msg变量里</span></span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span> ok <span class="keyword">then</span>                                           <span class="comment">-- 若解包不成功/未结束，则到连接里继续读取数据</span></span><br><span class="line">			<span class="keyword">local</span> rd = lsocket.<span class="built_in">select</span>(&#123;fd&#125;, ti)              <span class="comment">-- 让 lsocket 选择我们建立的链接</span></span><br><span class="line">			<span class="keyword">if</span> <span class="keyword">not</span> rd <span class="keyword">then</span></span><br><span class="line">				<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">			<span class="keyword">end</span></span><br><span class="line">			<span class="keyword">if</span> <span class="built_in">next</span>(rd) == <span class="literal">nil</span> <span class="keyword">then</span></span><br><span class="line">				<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">			<span class="keyword">end</span></span><br><span class="line">			<span class="keyword">local</span> p = fd:recv()                              <span class="comment">-- 读取链接数据</span></span><br><span class="line">			<span class="keyword">if</span> <span class="keyword">not</span> p <span class="keyword">then</span>                                    <span class="comment">-- 读取失败</span></span><br><span class="line">				<span class="built_in">error</span>(socket.<span class="built_in">error</span>)</span><br><span class="line">			<span class="keyword">end</span></span><br><span class="line">			message = message .. p                           <span class="comment">-- 将读取到的数据加到message里</span></span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			message = message:<span class="built_in">sub</span>(n)                         <span class="comment">-- 链接数据读取结束并返回解包后的数据</span></span><br><span class="line">			<span class="keyword">return</span> msg</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="发送数据函数"><a href="#发送数据函数" class="headerlink" title="发送数据函数"></a>发送数据函数</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">socket.write</span><span class="params">(msg)</span></span></span><br><span class="line">	<span class="keyword">local</span> pack = <span class="built_in">string</span>.pack(<span class="string">"&gt;s2"</span>, msg)  <span class="comment">-- 将要发送的数据打包为二进制数据</span></span><br><span class="line">	<span class="keyword">repeat</span></span><br><span class="line">		<span class="keyword">local</span> bytes = fd:send(pack)       <span class="comment">-- 调用链接对象发送数据，返回值为发送了多少个数据</span></span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span> bytes <span class="keyword">then</span>                 <span class="comment">-- 若发送失败则报错</span></span><br><span class="line">			<span class="built_in">error</span>(socket.<span class="built_in">error</span>)</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">		pack = pack:<span class="built_in">sub</span>(bytes+<span class="number">1</span>)          <span class="comment">-- 由于网络数据不一定一次能发送完全，所以分次发送，并删除已经发送的数据</span></span><br><span class="line">	<span class="keyword">until</span> pack == <span class="string">""</span>                      <span class="comment">-- 全部发送完毕后结束循环</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="消息处理"><a href="#消息处理" class="headerlink" title="消息处理"></a>消息处理</h1><hr>
+<p><strong>文件：simplemessage.lua</strong></p>
+<h2 id="声明定义-1"><a href="#声明定义-1" class="headerlink" title="声明定义"></a>声明定义</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> socket = <span class="built_in">require</span> <span class="string">"simplesocket"</span> <span class="comment">-- 封装好的链接</span></span><br><span class="line"><span class="keyword">local</span> sproto = <span class="built_in">require</span> <span class="string">"sproto"</span>       <span class="comment">-- sproto协议</span></span><br><span class="line"><span class="keyword">local</span> message = &#123;&#125;                    <span class="comment">-- 声明一个table用保存消息处理函数</span></span><br><span class="line"><span class="keyword">local</span> var = &#123;                         <span class="comment">-- 保存通信信息</span></span><br><span class="line">	session_id = <span class="number">0</span> ,</span><br><span class="line">	session = &#123;&#125;,</span><br><span class="line">	object = &#123;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="注册sproto协议"><a href="#注册sproto协议" class="headerlink" title="注册sproto协议"></a>注册sproto协议</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- sproto 协议定义在项目根目录proto文件夹中，可以文本文件打开</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">message.register</span><span class="params">(name)</span></span></span><br><span class="line">	<span class="keyword">local</span> f = <span class="built_in">assert</span>(<span class="built_in">io</span>.<span class="built_in">open</span>(name .. <span class="string">".s2c.sproto"</span>))    <span class="comment">-- 读取客户端协议定义文件</span></span><br><span class="line">	<span class="keyword">local</span> t = f:<span class="built_in">read</span> <span class="string">"a"</span></span><br><span class="line">	f:<span class="built_in">close</span>()</span><br><span class="line">	var.host = sproto.parse(t):host <span class="string">"package"</span>           <span class="comment">-- 加载到sproto进行解析</span></span><br><span class="line">	<span class="keyword">local</span> f = <span class="built_in">assert</span>(<span class="built_in">io</span>.<span class="built_in">open</span>(name .. <span class="string">".c2s.sproto"</span>))    <span class="comment">-- 读取服务端协议定义文件</span></span><br><span class="line">	<span class="keyword">local</span> t = f:<span class="built_in">read</span> <span class="string">"a"</span></span><br><span class="line">	f:<span class="built_in">close</span>()</span><br><span class="line">	var.request = var.host:attach(sproto.parse(t))      <span class="comment">-- 加载服务器sproto协议</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="设置连接地址（服务器地址和端口）"><a href="#设置连接地址（服务器地址和端口）" class="headerlink" title="设置连接地址（服务器地址和端口）"></a>设置连接地址（服务器地址和端口）</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">message.peer</span><span class="params">(addr, port)</span></span></span><br><span class="line">	var.addr = addr</span><br><span class="line">	var.port = port</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="连接服务器"><a href="#连接服务器" class="headerlink" title="连接服务器"></a>连接服务器</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">message.connect</span><span class="params">()</span></span></span><br><span class="line">	socket.connect(var.addr, var.port)</span><br><span class="line">	socket.isconnect()</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="绑定请求回调函数"><a href="#绑定请求回调函数" class="headerlink" title="绑定请求回调函数"></a>绑定请求回调函数</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">message.bind</span><span class="params">(obj, handler)</span></span></span><br><span class="line">	var.object\[obj\] = handler  <span class="comment">-- 将所有回调函数保存在object这个table中</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="发送请求"><a href="#发送请求" class="headerlink" title="发送请求"></a>发送请求</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">message.request</span><span class="params">(name, args)</span></span></span><br><span class="line">	var.session\_id = var.session\_id + <span class="number">1</span>                        <span class="comment">-- 每个请求保存一个sessionID</span></span><br><span class="line">	var.session\[var.session_id\] = &#123; name = name, req = args &#125;  <span class="comment">-- 并将请求信息保存，请求消息类型名称和请求内容</span></span><br><span class="line">	socket.<span class="built_in">write</span>(var.request(name , args, var.session_id))     <span class="comment">-- 发送请求，此处调用了sproto将请求数据进行打包，再发送给服务器</span></span><br><span class="line">	<span class="keyword">return</span> var.session_id</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="接收消息"><a href="#接收消息" class="headerlink" title="接收消息"></a>接收消息</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">message.update</span><span class="params">(ti)</span></span></span><br><span class="line">	<span class="keyword">local</span> msg = socket.<span class="built_in">read</span>(ti)  <span class="comment">-- 读取服务器发来的数据</span></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> msg <span class="keyword">then</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">local</span> t, session_id, resp, err = var.host:dispatch(msg)  <span class="comment">-- 通过sproto解包数据，返回值分别为</span></span><br><span class="line">                                                                 <span class="comment">-- t：消息类型RESPONSE/REQUEST</span></span><br><span class="line">                                                                 <span class="comment">-- session_id：消息ID,如果消息类型是REQUEST则该ID为消息名称，否则为在sproto定义文件中定义的数字ID</span></span><br><span class="line">                                                                 <span class="comment">-- resp：消息内容</span></span><br><span class="line">                                                                 <span class="comment">-- err：错误信息</span></span><br><span class="line">	<span class="keyword">if</span> t == <span class="string">"REQUEST"</span> <span class="keyword">then</span>                                   <span class="comment">-- 如果是服务器主动发来的消息</span></span><br><span class="line">		<span class="keyword">for</span> obj, handler <span class="keyword">in</span> <span class="built_in">pairs</span>(var.object) <span class="keyword">do</span>         <span class="comment">-- 从回调函数中寻找消息对应的处理函数</span></span><br><span class="line">			<span class="keyword">local</span> f = handler\[session\_id\]	<span class="comment">-- session\_id is request type</span></span><br><span class="line">			<span class="keyword">if</span> f <span class="keyword">then</span></span><br><span class="line">				<span class="keyword">local</span> ok, err_msg = <span class="built_in">pcall</span>(f, obj, resp)	<span class="comment">-- resp is content of push</span></span><br><span class="line">				<span class="keyword">if</span> <span class="keyword">not</span> ok <span class="keyword">then</span></span><br><span class="line">					<span class="built_in">print</span>(<span class="built_in">string</span>.<span class="built_in">format</span>(<span class="string">"push %s for \[%s\] error : %s"</span>, session\_id, <span class="built_in">tostring</span>(obj), err\_msg))</span><br><span class="line">				<span class="keyword">end</span></span><br><span class="line">			<span class="keyword">end</span></span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">local</span> session = var.session\[session\_id\]    <span class="comment">-- 通过session\_id获得消息类型名称</span></span><br><span class="line">		var.session\[session_id\] = <span class="literal">nil</span>              <span class="comment">-- 清除已经处理的请求</span></span><br><span class="line">		<span class="keyword">for</span> obj, handler <span class="keyword">in</span> <span class="built_in">pairs</span>(var.object) <span class="keyword">do</span>   <span class="comment">-- 从回调函数中寻找函数处理消息</span></span><br><span class="line">			<span class="keyword">if</span> err <span class="keyword">then</span>                        <span class="comment">-- 若发生错误则进行错误处理，此处打印错误信息</span></span><br><span class="line">				<span class="keyword">local</span> f = handler.__error</span><br><span class="line">				<span class="keyword">if</span> f <span class="keyword">then</span></span><br><span class="line">					<span class="keyword">local</span> ok, err\_msg = <span class="built_in">pcall</span>(f, obj, session.name, err, session.req, session\_id)</span><br><span class="line">					<span class="keyword">if</span> <span class="keyword">not</span> ok <span class="keyword">then</span></span><br><span class="line">						<span class="built_in">print</span>(<span class="built_in">string</span>.<span class="built_in">format</span>(<span class="string">"session %s\[%d\] error(%s) for \[%s\] error : %s"</span>, session.name, session\_id, err, <span class="built_in">tostring</span>(obj), err\_msg))</span><br><span class="line">					<span class="keyword">end</span></span><br><span class="line">				<span class="keyword">end</span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				<span class="keyword">local</span> f = handler\[session.name\]  <span class="comment">-- 获取回调函数</span></span><br><span class="line">				<span class="keyword">if</span> f <span class="keyword">then</span></span><br><span class="line">					<span class="keyword">local</span> ok, err\_msg = <span class="built_in">pcall</span>(f, obj, session.req, resp, session\_id)  <span class="comment">-- 调用回调函数，并传入消息内容</span></span><br><span class="line">					<span class="keyword">if</span> <span class="keyword">not</span> ok <span class="keyword">then</span></span><br><span class="line">						<span class="built_in">print</span>(<span class="built_in">string</span>.<span class="built_in">format</span>(<span class="string">"session %s\[%d\] for \[%s\] error : %s"</span>, session.name, session\_id, <span class="built_in">tostring</span>(obj), err\_msg))</span><br><span class="line">					<span class="keyword">end</span></span><br><span class="line">				<span class="keyword">end</span></span><br><span class="line">			<span class="keyword">end</span></span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="客户端入口"><a href="#客户端入口" class="headerlink" title="客户端入口"></a>客户端入口</h1><hr>
+<p><strong>文件：simpleclient.lua</strong></p>
+<h2 id="声明定义-2"><a href="#声明定义-2" class="headerlink" title="声明定义"></a>声明定义</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> PATH,IP = ...</span><br><span class="line">IP = IP <span class="keyword">or</span> <span class="string">"127.0.0.1"</span>	<span class="comment">-- 服务器IP地址</span></span><br><span class="line"><span class="built_in">package</span>.<span class="built_in">path</span> = <span class="built_in">string</span>.<span class="built_in">format</span>(<span class="string">"%s/client/?.lua;%s/skynet/lualib/?.lua"</span>, PATH, PATH)	<span class="comment">-- 加载lua基础包</span></span><br><span class="line"><span class="built_in">package</span>.<span class="built_in">cpath</span> = <span class="built_in">string</span>.<span class="built_in">format</span>(<span class="string">"%s/skynet/luaclib/?.so;%s/lsocket/?.so"</span>, PATH, PATH)</span><br><span class="line"><span class="keyword">local</span> socket = <span class="built_in">require</span> <span class="string">"simplesocket"</span>    <span class="comment">-- 加载封装好的链接包</span></span><br><span class="line"><span class="keyword">local</span> message = <span class="built_in">require</span> <span class="string">"simplemessage"</span>  <span class="comment">-- 加载消息处理包</span></span><br><span class="line">message.register(<span class="built_in">string</span>.<span class="built_in">format</span>(<span class="string">"%s/proto/%s"</span>, PATH, <span class="string">"proto"</span>))  <span class="comment">-- 注册sproto协议定义数据</span></span><br><span class="line">message.peer(IP, <span class="number">5678</span>)  <span class="comment">-- 设置服务器地址和端口</span></span><br><span class="line">message.connect()       <span class="comment">-- 连接服务器</span></span><br><span class="line"><span class="keyword">local</span> event = &#123;&#125;        <span class="comment">-- 消息回调函数保存在这个table中</span></span><br><span class="line">message.bind(&#123;&#125;, event) <span class="comment">-- 绑定消息回调函数</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 默认的错误处理函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">event:__error</span><span class="params">(what, err, req, session)</span></span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">"error"</span>, what, err)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 心跳？</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">event:ping</span><span class="params">()</span></span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">"ping"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="登陆回调"><a href="#登陆回调" class="headerlink" title="登陆回调"></a>登陆回调</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">event:signin</span><span class="params">(req, resp)</span></span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">"signin"</span>, req.userid, resp.ok)</span><br><span class="line">	<span class="keyword">if</span> resp.ok <span class="keyword">then</span>		         <span class="comment">-- 若登陆成功，则请求login</span></span><br><span class="line">		message.request <span class="string">"ping"</span>	 <span class="comment">-- should error before login</span></span><br><span class="line">		message.request <span class="string">"login"</span>  <span class="comment">-- 请求login</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="comment">-- signin failed, signup</span></span><br><span class="line">		message.request(<span class="string">"signup"</span>, &#123; userid = <span class="string">"alice"</span> &#125;) <span class="comment">-- 若登录失败则发送注册请求</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="注册回调函数"><a href="#注册回调函数" class="headerlink" title="注册回调函数"></a>注册回调函数</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">event:signup</span><span class="params">(req, resp)</span></span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">"signup"</span>, resp.ok)</span><br><span class="line">	<span class="keyword">if</span> resp.ok <span class="keyword">then</span></span><br><span class="line">		message.request(<span class="string">"signin"</span>, &#123; userid = req.userid &#125;)  <span class="comment">-- 若注册成功则发送登陆请求</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">error</span> <span class="string">"Can't signup"</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Login回调"><a href="#Login回调" class="headerlink" title="Login回调"></a>Login回调</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">event:login</span><span class="params">(_, resp)</span></span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">"login"</span>, resp.ok)</span><br><span class="line">	<span class="keyword">if</span> resp.ok <span class="keyword">then</span></span><br><span class="line">		message.request <span class="string">"ping"</span>	<span class="comment">-- 登陆成功则发送 ping</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">error</span> <span class="string">"Can't login"</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器推送消息回调"><a href="#服务器推送消息回调" class="headerlink" title="服务器推送消息回调"></a>服务器推送消息回调</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">event:push</span><span class="params">(args)</span></span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">"server push"</span>, args.text)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="登录逻辑"><a href="#登录逻辑" class="headerlink" title="登录逻辑"></a>登录逻辑</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 启动客户端后发送登陆请求</span></span><br><span class="line">message.request(<span class="string">"signin"</span>, &#123; userid = <span class="string">"alice"</span> &#125;)</span><br><span class="line"><span class="comment">-- 接收服务器消息</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span> <span class="keyword">do</span></span><br><span class="line">	message.update()</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>以上就是范例中客户端的全部内容，本人半天lua水平，有什么不对的地方欢迎指出哈，感谢阅读~</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Tshine Zheng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="Tshine Zheng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Tshine Zheng</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="http://blog.tshine.me/skynet-sample-client.html" title="skynet范例研究--客户端">http://blog.tshine.me/skynet-sample-client.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Lua/" rel="tag"># Lua</a>
+          
+            <a href="/tags/Skynet/" rel="tag"># Skynet</a>
+          
+            <a href="/tags/游戏服务器/" rel="tag"># 游戏服务器</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/openwrt-cc15-change-opkg-conf.html" rel="next" title="OpenWRT CC(15.05) 修改软件源">
+                <i class="fa fa-chevron-left"></i> OpenWRT CC(15.05) 修改软件源
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/seafile-auto-start-failed.html" rel="prev" title="Seafile开机启动失败的解决办法">
+                Seafile开机启动失败的解决办法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+  <p class="site-author-name" itemprop="name">Tshine Zheng</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/TshineZheng" title="GitHub &rarr; https://github.com/TshineZheng" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:gtshine@gmail.com" title="E-Mail &rarr; mailto:gtshine@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#socket链接封装"><span class="nav-number">1.</span> <span class="nav-text">socket链接封装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明定义"><span class="nav-number">1.1.</span> <span class="nav-text">声明定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接函数"><span class="nav-number">1.2.</span> <span class="nav-text">连接函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链接状态函数"><span class="nav-number">1.3.</span> <span class="nav-text">链接状态函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭链接函数"><span class="nav-number">1.4.</span> <span class="nav-text">关闭链接函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取链接数据函数"><span class="nav-number">1.5.</span> <span class="nav-text">读取链接数据函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送数据函数"><span class="nav-number">1.6.</span> <span class="nav-text">发送数据函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#消息处理"><span class="nav-number">2.</span> <span class="nav-text">消息处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明定义-1"><span class="nav-number">2.1.</span> <span class="nav-text">声明定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册sproto协议"><span class="nav-number">2.2.</span> <span class="nav-text">注册sproto协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置连接地址（服务器地址和端口）"><span class="nav-number">2.3.</span> <span class="nav-text">设置连接地址（服务器地址和端口）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接服务器"><span class="nav-number">2.4.</span> <span class="nav-text">连接服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绑定请求回调函数"><span class="nav-number">2.5.</span> <span class="nav-text">绑定请求回调函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送请求"><span class="nav-number">2.6.</span> <span class="nav-text">发送请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接收消息"><span class="nav-number">2.7.</span> <span class="nav-text">接收消息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端入口"><span class="nav-number">3.</span> <span class="nav-text">客户端入口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明定义-2"><span class="nav-number">3.1.</span> <span class="nav-text">声明定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误处理"><span class="nav-number">3.2.</span> <span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ping"><span class="nav-number">3.3.</span> <span class="nav-text">Ping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登陆回调"><span class="nav-number">3.4.</span> <span class="nav-text">登陆回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册回调函数"><span class="nav-number">3.5.</span> <span class="nav-text">注册回调函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Login回调"><span class="nav-number">3.6.</span> <span class="nav-text">Login回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器推送消息回调"><span class="nav-number">3.7.</span> <span class="nav-text">服务器推送消息回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登录逻辑"><span class="nav-number">3.8.</span> <span class="nav-text">登录逻辑</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2011 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tshine Zheng</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" rel="external nofollow" href="https://pages.coding.me"><b>Coding Pages</b></a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: false,
+    appId: 'Tp4HMrirjYpUVRmeqoCIXrPh-gzGzoHsz',
+    appKey: 'dV4EzUxh77uKd0q1sCYaVMTR',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>

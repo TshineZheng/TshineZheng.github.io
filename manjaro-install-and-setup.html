@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="Manjaro 是目前我用过最省心最舒服的一个 Linux 发行版，不管是稳定性还是效率都很棒，两年多重来没有更新挂过，而且软件仓库采用的是和 ArchLinux 一样的 AUR，AUR 软件仓库有着世界上最齐全的 Linux软件，所以软件方面几乎不用担心。">
+<meta name="keywords" content="Linux,Manjaro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Manjaro 安装与配置">
+<meta property="og:url" content="http://blog.tshine.me/manjaro-install-and-setup.html">
+<meta property="og:site_name" content="Tshine&#39;s blog">
+<meta property="og:description" content="Manjaro 是目前我用过最省心最舒服的一个 Linux 发行版，不管是稳定性还是效率都很棒，两年多重来没有更新挂过，而且软件仓库采用的是和 ArchLinux 一样的 AUR，AUR 软件仓库有着世界上最齐全的 Linux软件，所以软件方面几乎不用担心。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/8/85/Manjaro_logo_text.svg">
+<meta property="og:image" content="http://blog.tshine.me/manjaro-install-and-setup/987075da81cb39db85c5654fd8160924aa1830d1.png">
+<meta property="og:updated_time" content="2019-07-27T05:27:13.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Manjaro 安装与配置">
+<meta name="twitter:description" content="Manjaro 是目前我用过最省心最舒服的一个 Linux 发行版，不管是稳定性还是效率都很棒，两年多重来没有更新挂过，而且软件仓库采用的是和 ArchLinux 一样的 AUR，AUR 软件仓库有着世界上最齐全的 Linux软件，所以软件方面几乎不用担心。">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/8/85/Manjaro_logo_text.svg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://blog.tshine.me/manjaro-install-and-setup">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>Manjaro 安装与配置 | Tshine's blog</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f040c18a472a04e56ac5fd8c11506de8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tshine's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">浪漫的人不会贫穷</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-留言">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/guestbook/" rel="section"><i class="menu-item-icon fa fa-fw fa-comment"></i> <br>留言</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/TshineZheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.tshine.me/manjaro-install-and-setup.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tshine Zheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tshine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Manjaro 安装与配置
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-27 12:39:34" itemprop="dateCreated datePublished" datetime="2019-07-27T12:39:34+08:00">2019-07-27</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/manjaro-install-and-setup.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/manjaro-install-and-setup.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/manjaro-install-and-setup.html" class="post-meta-item leancloud_visitors" data-flag-title="Manjaro 安装与配置">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://upload.wikimedia.org/wikipedia/commons/8/85/Manjaro_logo_text.svg" alt><br>Manjaro 是目前我用过最省心最舒服的一个 Linux 发行版，不管是稳定性还是效率都很棒，两年多重来没有更新挂过，而且软件仓库采用的是和 ArchLinux 一样的 AUR，AUR 软件仓库有着世界上最齐全的 Linux软件，所以软件方面几乎不用担心。  </p>
+<a id="more"></a>
+
+<p><em>本文可能略长，可以通过查看左边的目录进行快速浏览。</em></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="安装准备"><a href="#安装准备" class="headerlink" title="安装准备"></a>安装准备</h2><p>1、下载系统 iso 镜像<br><a href="https://manjaro.org/get-manjaro/" target="_blank" rel="noopener">https://manjaro.org/get-manjaro/</a><br>2、Win32 Disk Imager<br><a href="https://sourceforge.net/projects/win32diskimager/" target="_blank" rel="noopener">https://sourceforge.net/projects/win32diskimager/</a></p>
+<h2 id="制作启动-U盘"><a href="#制作启动-U盘" class="headerlink" title="制作启动 U盘"></a>制作启动 U盘</h2><p>用 Win32 Disk Imager 打开 iso ，然后选种 u 盘所在盘符，最后点 write ，等待写入完成，就制作好了</p>
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><h3 id="启动安装"><a href="#启动安装" class="headerlink" title="启动安装"></a>启动安装</h3><p>制作好U盘后，重启系统，通过 Bois 选择启动 U盘中的系统安装程序</p>
+<blockquote>
+<p>此处可能需要关闭 Bios 里的安全启动，华硕Z77-M将安全启动设置为其他模式</p>
+</blockquote>
+<h3 id="安装前的设置"><a href="#安装前的设置" class="headerlink" title="安装前的设置"></a>安装前的设置</h3><p>在进入安装安装前，可以设置安装时使用的语言等信息，然后选择进入安装程序</p>
+<h3 id="安装设置"><a href="#安装设置" class="headerlink" title="安装设置"></a>安装设置</h3><p>1、创建 200M fat32 格式，挂载到 <code>/boot/efi</code> 并设置 <code>boot</code> 和 <code>esf</code> 属性<br>2、创建 8G linuxswap 格式，这个 8G 根据内存的一半设置<br>3、创建 50G ext4 格式，挂载到 <code>/</code><br>4、创建 一个挂载到 <code>/home</code> 的分区作为用户数据目录</p>
+<p>这样安装好后，不会覆盖原有的开机启动，而是将启动项写入到 <code>/boot/efi</code> 分区中。</p>
+<blockquote>
+<p><a href="https://www.youtube.com/watch?v=ZLocHGrEfyQ" target="_blank" rel="noopener">https://www.youtube.com/watch?v=ZLocHGrEfyQ</a></p>
+</blockquote>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>主要记录一些必要的配置。</p>
+<h2 id="设置中国源"><a href="#设置中国源" class="headerlink" title="设置中国源"></a>设置中国源</h2><p><a href="http://mirrors.ustc.edu.cn/help/manjaro.html" target="_blank" rel="noopener">http://mirrors.ustc.edu.cn/help/manjaro.html</a><br>生成可用的中国镜像站列表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman-mirrors -i -c China -m rank</span><br></pre></td></tr></table></figure>
+
+<p>勾选 <code>http://mirrors.ustc.edu.cn/manjaro/</code> ，然后按 <code>OK</code> 键两次。<br>最后刷新缓存：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Syy</span><br></pre></td></tr></table></figure>
+
+<h2 id="ArchlinuxCN-源"><a href="#ArchlinuxCN-源" class="headerlink" title="ArchlinuxCN 源"></a>ArchlinuxCN 源</h2><p>修改 <code>/etc/pacman.conf</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/pacman.conf</span><br></pre></td></tr></table></figure>
+
+<p>在最后加入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">SigLevel = Optional TrustedOnly</span><br><span class="line">Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Server 可以用原始的 <code>http://repo.archlinuxcn.org/$arch</code>，不过速度没有 USTC 的快</p>
+</blockquote>
+<p>同步</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Syy</span><br></pre></td></tr></table></figure>
+
+<p>导入 GPG key</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S archlinuxcn-keyring</span><br></pre></td></tr></table></figure>
+
+<h2 id="AUR-源"><a href="#AUR-源" class="headerlink" title="AUR 源"></a>AUR 源</h2><p>修改 <code>/etc/yaourtrc</code>，去掉 <code># AURURL</code> 的注释，修改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AURURL=&quot;https://aur.tuna.tsinghua.edu.cn&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>此处会发现没有这个文件，是因为还没有安装<code>yaourt</code>，可以先运行<code>sudo pacman -S yaourt</code>安装。</p>
+</blockquote>
+<h2 id="显卡驱动"><a href="#显卡驱动" class="headerlink" title="显卡驱动"></a>显卡驱动</h2><blockquote>
+<p>如果安装的时候没有选择boot（non-free)，那么装好系统以后也可以安装bumblebee，图形化安装方法是点击设置里的ManjaroSetting。</p>
+</blockquote>
+<p>开始菜单 &gt; 设置 &gt; 所有设置 &gt; Manjaro-Settings Manager &gt; HardwareDetection &gt; AutoInstall Proprietary Driver，之后系统就会自动选择适合的驱动。这里安装的是闭源驱动。</p>
+<h2 id="自动挂载-Ntfs-分区"><a href="#自动挂载-Ntfs-分区" class="headerlink" title="自动挂载 Ntfs 分区"></a>自动挂载 Ntfs 分区</h2><blockquote>
+<p>如果某些软件的数据是存储在 Ntfs 分区下的话，就可能需要开机自动挂载使用到的分区，否则软件会找不到路径。</p>
+</blockquote>
+<p>如果没有将数据保存在 NTFS 分区则不需要做这一步。</p>
+<p>1、查看分区的文件系统路径<br>首先手动挂载一个你想要自动挂载的 Ntfs 分区，在文件浏览器点击进入该分区即可，然后在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">文件系统           1K-块      已用      可用 已用% 挂载点</span><br><span class="line">dev              8177788         0   8177788    0% /dev</span><br><span class="line">run              8184388      1508   8182880    1% /run</span><br><span class="line">/dev/sda6       69356808  11377864  54412764   18% /</span><br><span class="line">tmpfs            8184388     46492   8137896    1% /dev/shm</span><br><span class="line">tmpfs            8184388         0   8184388    0% /sys/fs/cgroup</span><br><span class="line">tmpfs            8184388     31772   8152616    1% /tmp</span><br><span class="line">/dev/sda7         201989       244    201745    1% /boot/efi</span><br><span class="line">/dev/sdb7       95990540  24045356  67046012   27% /home</span><br><span class="line">/dev/sdb3      137862140 109463416  28398724   80% /media/Data</span><br><span class="line">/dev/sdb1      209720124 126747772  82972352   61% /media/Media</span><br><span class="line">/dev/sdb2      314583064 180287000 134296064   58% /media/Zone</span><br></pre></td></tr></table></figure>
+
+<p>假设要挂载的是 <code>/media/Data</code> 这个分区，那么记下 <code>/dev/sdb3</code> 这个文件系统路径</p>
+<p>2、修改 <code>/etc/fstab</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>加入如下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/sdb3 /media/Data ntfs defaults,noatime 0 0</span><br></pre></td></tr></table></figure>
+
+<p>保存重启后，系统应该就自动加载了这个分区了</p>
+<blockquote>
+<p>新系统安装完成后，可能会自动挂载一些不必要的分区，比如 Windows 的系统分区，记得在 <code>fstab</code> 文件中注释掉他们，在对应的行首加入 <code>#</code> 即可。</p>
+</blockquote>
+<h2 id="时间同步"><a href="#时间同步" class="headerlink" title="时间同步"></a>时间同步</h2><blockquote>
+<p>如果是和 Windows 双系统，那么在切换系统后会发现时间相差8个小时<br><a href="http://blog.csdn.net/aaazz47/article/details/78696899" target="_blank" rel="noopener">http://blog.csdn.net/aaazz47/article/details/78696899</a></p>
+</blockquote>
+<p>在 Linux 下执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo timedatectl <span class="built_in">set</span>-local-rtc <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="软件管理"><a href="#软件管理" class="headerlink" title="软件管理"></a>软件管理</h2><p>1、GUI 方式添加软件</p>
+<p>在设置中打开<code>添加/删除软件</code>，在里面搜索想要的软件安装即可</p>
+<blockquote>
+<p>打开该软件的首选项，然后切换到 AUR 分页，启用 AUR 支持，这样可以搜到更多的应用<br>这些应用是社区维护的</p>
+</blockquote>
+<p>2、命令行方式添加软件</p>
+<p>安装软件命令（package_name 即是指软件名字，如 firefox）：<br>sudo pacman -S package_name </p>
+<p>卸载软件命令：<br>sudo pacman -R package_name </p>
+<p>卸载软件＋不需要的依赖（类似sudo apt autoremove）：<br>sudo pacman -Rs package_name</p>
+<p>3、<code>yaourt</code><br>这个命令可以搜索出所有类似的应用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S yaourt</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，比如需要安装 QQ，就在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yaourt QQ</span><br></pre></td></tr></table></figure>
+
+<p>就会列出所有相关结果，然后输入编号即可安装对应的软件。</p>
+<h2 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h2><p><code>终端</code>或<code>添加/删除软件</code>中使用以下关键字安装。</p>
+<table>
+<thead>
+<tr>
+<th>应用</th>
+<th>包名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chrome</td>
+<td>google-chrome</td>
+</tr>
+<tr>
+<td>fcitx 输入法</td>
+<td>fcitx</td>
+</tr>
+<tr>
+<td>fcitx 输入法配置器</td>
+<td>fcitx-configtool</td>
+</tr>
+<tr>
+<td>$$</td>
+<td>$$-qt5</td>
+</tr>
+<tr>
+<td>屏幕色温调节（夜间模式）</td>
+<td>redshift</td>
+</tr>
+<tr>
+<td>全局鼠标手势</td>
+<td>easystroke</td>
+</tr>
+<tr>
+<td>密码管理</td>
+<td>keepassxc</td>
+</tr>
+<tr>
+<td>浏览器缓存到内存（需配置）</td>
+<td>profile-sync-daemon</td>
+</tr>
+<tr>
+<td>简洁的图片查看器</td>
+<td>Nomacs</td>
+</tr>
+</tbody></table>
+<p>批量安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S google-chrome fcitx fcitx-configtool shadowsocks-qt5 redshift keepassxc profile-sync-daemon</span><br></pre></td></tr></table></figure>
+
+<h2 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h2><p>安装输入法后可能会遇到输入法无法切换的问题。<br>新建/修改 <code>~/.xprofile</code> 文件中添加如下内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GTK_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> QT_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">"@im=fcitx"</span></span><br></pre></td></tr></table></figure>
+
+<p>保存并退出，注销重新登陆就可以了 <code>ctrl + space</code></p>
+<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><h3 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yaourt jdk</span><br></pre></td></tr></table></figure>
+
+<p>选择一个 Oracle 版本的 jdk 安装</p>
+<blockquote>
+<p>据说 openjdk 在 intellij IDEA 中表现不如 Oracle 版本，如果不在意的话可以不安装，下面关于 jdk 配置也不用做。<br><a href="https://forum.manjaro.org/t/android-studio-installation-guide/12630" target="_blank" rel="noopener">https://forum.manjaro.org/t/android-studio-installation-guide/12630</a></p>
+</blockquote>
+<p>配置默认 java</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo archlinux-java <span class="built_in">set</span> java-8-jdk</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你安装的是9就是 java-9-jdk，依此类推</p>
+</blockquote>
+<h3 id="Android-studio"><a href="#Android-studio" class="headerlink" title="Android studio"></a>Android studio</h3><p>然后命令行或者软件管理器中搜索 android-studio 安装即可.</p>
+<p>Android-studio 安装好后, 启动 AVD 时可能会出现错误, 不能启动，可尝试以下操作（未验证）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ～/Android/tools/lib64/libstdc++</span><br><span class="line">mv libstdc++.so.6 libstdc++.so.6.bak</span><br><span class="line">ln -s /usr/lib64/libstdc++.so.6 ～/Android/tools/lib64/libstdc++</span><br></pre></td></tr></table></figure>
+
+<h1 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h1><h2 id="ZSH-终端"><a href="#ZSH-终端" class="headerlink" title="ZSH 终端"></a>ZSH 终端</h2><p>首先是安装 zsh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S zsh</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">接着配置 oh-my-zsh</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">sh -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>"</span></span><br></pre></td></tr></table></figure>
+
+<p>最后更换默认的 shell: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+
+<p>重启之后就就可以愉快的使用 zsh 了。<br>另外可以安装 <a href="https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md" target="_blank" rel="noopener">zsh-syntax-highlighting</a> 插件，它可以高亮所有可以使用的命令，比如 ls cd 等等。<br>这里采用插件的方式安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+
+<p>然后编辑 <code>~/.zshrc</code> ，搜索 <code>pulgins</code>，将 <code>zsh-syntax-highlighting</code> 加入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=( [plugins...] zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
+
+<p>重新打开终端即可生效。</p>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><blockquote>
+<p>这一步非必要，没有仔细判断是否有改善<br>仅针对 <code>xfce</code></p>
+</blockquote>
+<p>安装 noto-fonts-cjk</p>
+<blockquote>
+<p>安装时可能会卡住，卡住时 ctrl + alt + f1，然后 ctrl + alt + f7 切换回来可能就好了</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S noto-fonts-cjk</span><br></pre></td></tr></table></figure>
+
+<p>开始菜单 &gt; 设置 &gt; 所有设置 &gt; 外观 &gt; 字体<br>然后，将字体修改为 <code>Noto Sans Mono CJK SC</code>，字号 <code>11</code>，样式 <code>Regular</code>。<br>设置略微抗锯齿，次像素次序设置为 RGB。</p>
+<img src="/manjaro-install-and-setup/987075da81cb39db85c5654fd8160924aa1830d1.png">
+
+<p>新建文件 <code>/etc/fonts/local.conf</code>，加入以下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;match target=&quot;font&quot;&gt; </span><br><span class="line">&lt;edit name=&quot;autohint&quot; mode=&quot;assign&quot;&gt; </span><br><span class="line">&lt;bool&gt;true&lt;/bool&gt; </span><br><span class="line">&lt;/edit&gt; </span><br><span class="line">&lt;edit name=&quot;hinting&quot; mode=&quot;assign&quot;&gt; </span><br><span class="line">&lt;bool&gt;true&lt;/bool&gt; </span><br><span class="line">&lt;/edit&gt; </span><br><span class="line">&lt;edit mode=&quot;assign&quot; name=&quot;hintstyle&quot;&gt; </span><br><span class="line">&lt;const&gt;hintslight&lt;/const&gt; </span><br><span class="line">&lt;/edit&gt; </span><br><span class="line">&lt;edit mode=&quot;assign&quot; name=&quot;lcdfilter&quot;&gt; </span><br><span class="line">&lt;const&gt;lcddefault&lt;/const&gt; </span><br><span class="line">&lt;/edit&gt;</span><br><span class="line">&lt;/match&gt;</span><br></pre></td></tr></table></figure>
+
+<p>打开/新建 <code>~/.Xresources</code> 文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano ~/.Xresources</span><br></pre></td></tr></table></figure>
+
+<p>删除文件里的原有内容（如果有的话），写入以下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Xft.dpi: 96</span><br><span class="line">Xft.antialias: true</span><br><span class="line">Xft.hinting: true</span><br><span class="line">Xft.rgba: rgb</span><br><span class="line">Xft.autohint: false</span><br><span class="line">Xft.hintstyle: hintslight</span><br><span class="line">Xft.lcdfilter: lcddefault</span><br></pre></td></tr></table></figure>
+
+<p>保存后在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xrdb -merge ~/.Xresources</span><br></pre></td></tr></table></figure>
+
+<p>重启系统</p>
+<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><p><a href="https://github.com/horst3180/arc-theme" target="_blank" rel="noopener">https://github.com/horst3180/arc-theme</a></p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Tshine Zheng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="Tshine Zheng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Tshine Zheng</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="http://blog.tshine.me/manjaro-install-and-setup.html" title="Manjaro 安装与配置">http://blog.tshine.me/manjaro-install-and-setup.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Manjaro/" rel="tag"># Manjaro</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/how-to-use-sshkey.html" rel="next" title="SSH Key 的使用">
+                <i class="fa fa-chevron-left"></i> SSH Key 的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+  <p class="site-author-name" itemprop="name">Tshine Zheng</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/TshineZheng" title="GitHub &rarr; https://github.com/TshineZheng" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:gtshine@gmail.com" title="E-Mail &rarr; mailto:gtshine@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装准备"><span class="nav-number">1.1.</span> <span class="nav-text">安装准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作启动-U盘"><span class="nav-number">1.2.</span> <span class="nav-text">制作启动 U盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始安装"><span class="nav-number">1.3.</span> <span class="nav-text">开始安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动安装"><span class="nav-number">1.3.1.</span> <span class="nav-text">启动安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装前的设置"><span class="nav-number">1.3.2.</span> <span class="nav-text">安装前的设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装设置"><span class="nav-number">1.3.3.</span> <span class="nav-text">安装设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置中国源"><span class="nav-number">2.1.</span> <span class="nav-text">设置中国源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ArchlinuxCN-源"><span class="nav-number">2.2.</span> <span class="nav-text">ArchlinuxCN 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AUR-源"><span class="nav-number">2.3.</span> <span class="nav-text">AUR 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显卡驱动"><span class="nav-number">2.4.</span> <span class="nav-text">显卡驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动挂载-Ntfs-分区"><span class="nav-number">2.5.</span> <span class="nav-text">自动挂载 Ntfs 分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间同步"><span class="nav-number">2.6.</span> <span class="nav-text">时间同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件管理"><span class="nav-number">2.7.</span> <span class="nav-text">软件管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装软件"><span class="nav-number">2.8.</span> <span class="nav-text">安装软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入法"><span class="nav-number">2.9.</span> <span class="nav-text">输入法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发环境"><span class="nav-number">2.10.</span> <span class="nav-text">开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK"><span class="nav-number">2.10.1.</span> <span class="nav-text">JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-studio"><span class="nav-number">2.10.2.</span> <span class="nav-text">Android studio</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#美化"><span class="nav-number">3.</span> <span class="nav-text">美化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ZSH-终端"><span class="nav-number">3.1.</span> <span class="nav-text">ZSH 终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">3.2.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主题"><span class="nav-number">3.3.</span> <span class="nav-text">主题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2011 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tshine Zheng</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" rel="external nofollow" href="https://pages.coding.me"><b>Coding Pages</b></a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: false,
+    appId: 'Tp4HMrirjYpUVRmeqoCIXrPh-gzGzoHsz',
+    appKey: 'dV4EzUxh77uKd0q1sCYaVMTR',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>
