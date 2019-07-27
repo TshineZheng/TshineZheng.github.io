@@ -4,7 +4,7 @@
   <url>
     <loc>http://blog.tshine.me/manjaro-install-and-setup.html</loc>
     
-    <lastmod>2019-07-27T05:27:13.800Z</lastmod>
+    <lastmod>2019-07-27T06:18:38.589Z</lastmod>
     
   </url>
   
@@ -23,14 +23,14 @@
   </url>
   
   <url>
-    <loc>http://blog.tshine.me/centos6-wordpress-setup.html</loc>
+    <loc>http://blog.tshine.me/centos6-wordpress-environment-setup.html</loc>
     
     <lastmod>2019-07-27T04:20:11.872Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.tshine.me/centos6-wordpress-environment-setup.html</loc>
+    <loc>http://blog.tshine.me/centos6-wordpress-setup.html</loc>
     
     <lastmod>2019-07-27T04:20:11.872Z</lastmod>
     
@@ -58,14 +58,14 @@
   </url>
   
   <url>
-    <loc>http://blog.tshine.me/wordpress-install-codecolorer.html</loc>
+    <loc>http://blog.tshine.me/wordpress-issues.html</loc>
     
     <lastmod>2019-07-27T04:20:11.872Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.tshine.me/wordpress-issues.html</loc>
+    <loc>http://blog.tshine.me/wordpress-install-codecolorer.html</loc>
     
     <lastmod>2019-07-27T04:20:11.872Z</lastmod>
     
@@ -100,6 +100,13 @@
   </url>
   
   <url>
+    <loc>http://blog.tshine.me/openwrt-barrierbreaker-install-svn.html</loc>
+    
+    <lastmod>2019-07-27T04:20:11.868Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.tshine.me/openwrt-compile.html</loc>
     
     <lastmod>2019-07-27T04:20:11.868Z</lastmod>
@@ -108,13 +115,6 @@
   
   <url>
     <loc>http://blog.tshine.me/openwrt-cc15-change-opkg-conf.html</loc>
-    
-    <lastmod>2019-07-27T04:20:11.868Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.tshine.me/openwrt-barrierbreaker-install-svn.html</loc>
     
     <lastmod>2019-07-27T04:20:11.868Z</lastmod>
     
@@ -135,14 +135,14 @@
   </url>
   
   <url>
-    <loc>http://blog.tshine.me/cocos2dx-use-dragonbones-outdated.html</loc>
+    <loc>http://blog.tshine.me/repair-toilet-cover.html</loc>
     
     <lastmod>2019-07-27T04:20:11.865Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.tshine.me/repair-toilet-cover.html</loc>
+    <loc>http://blog.tshine.me/cocos2dx-use-dragonbones-outdated.html</loc>
     
     <lastmod>2019-07-27T04:20:11.865Z</lastmod>
     
@@ -163,21 +163,7 @@
   </url>
   
   <url>
-    <loc>http://blog.tshine.me/macos10.9.4-install-log.html</loc>
-    
-    <lastmod>2019-07-27T04:20:11.848Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.tshine.me/seafile-auto-start-failed.html</loc>
-    
-    <lastmod>2019-07-27T04:20:11.848Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.tshine.me/mi-router-shadowsocks-redsocks2.html</loc>
     
     <lastmod>2019-07-27T04:20:11.848Z</lastmod>
     
@@ -191,7 +177,14 @@
   </url>
   
   <url>
-    <loc>http://blog.tshine.me/virtualbox-install-openwrt.html</loc>
+    <loc>http://blog.tshine.me/macos10.9.4-install-log.html</loc>
+    
+    <lastmod>2019-07-27T04:20:11.848Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.tshine.me/mi-router-shadowsocks-redsocks2.html</loc>
     
     <lastmod>2019-07-27T04:20:11.848Z</lastmod>
     
@@ -199,6 +192,13 @@
   
   <url>
     <loc>http://blog.tshine.me/skynet-sample-client.html</loc>
+    
+    <lastmod>2019-07-27T04:20:11.848Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.tshine.me/virtualbox-install-openwrt.html</loc>
     
     <lastmod>2019-07-27T04:20:11.848Z</lastmod>
     
