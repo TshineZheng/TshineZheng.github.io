@@ -60,7 +60,18 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css?v=1.0.2">
 
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
 
 
 
@@ -71,11 +82,11 @@
     scheme: 'Gemini',
     version: '7.2.0',
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     copycode: {"enable":false,"show_result":false,"style":null},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -102,16 +113,10 @@
 <meta property="og:site_name" content="Tshine&#39;s blog">
 <meta property="og:description" content="有时候可能需要测试一些东西，总是拿家里的路由器开刀的话会很危险，一不小心，家里全断网了，悲剧……还有一次不小打错了命令rm -r ….你懂的。这没什么，最麻烦的是要重装系统，各种配置，大半天就这么过去了。又不想为了这么点事再去买一台路由器，所以就萌生了用虚拟机安装OpenWrt的想法，想起以前开发Android的时候就用过VirtualBox虚拟Androidx86，那叫一个快啊，比Google提">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualboxnewopenwrt.jpg">
-<meta property="og:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualboxnewopenwrt.jpg">
-<meta property="og:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualbox_network1_setting.jpg">
-<meta property="og:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualbox_network2_setting.jpg">
-<meta property="og:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualbox_com1_setting.jpg">
 <meta property="og:updated_time" content="2019-07-27T04:20:11.848Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VirtualBox安装OpenWrt">
 <meta name="twitter:description" content="有时候可能需要测试一些东西，总是拿家里的路由器开刀的话会很危险，一不小心，家里全断网了，悲剧……还有一次不小打错了命令rm -r ….你懂的。这没什么，最麻烦的是要重装系统，各种配置，大半天就这么过去了。又不想为了这么点事再去买一台路由器，所以就萌生了用虚拟机安装OpenWrt的想法，想起以前开发Android的时候就用过VirtualBox虚拟Androidx86，那叫一个快啊，比Google提">
-<meta name="twitter:image" content="http://blog.tshine.me/virtualbox-install-openwrt/virtualboxnewopenwrt.jpg">
 
 
 
@@ -339,13 +344,6 @@
     </header>
 
     
-  
-  
-
-  
-
-  <a href="https://github.com/TshineZheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
-
 
 
     <main id="main" class="main">
@@ -501,14 +499,14 @@
 <p>VBoxManager.exe convertfromraw –format VDI openwrt-x86-generic-combined-ext4.img openwrt.vdi</p>
 <p>执行完成之后会在当前目录下生成openwrt.vdi，这一步是将img转换成VirtualBox可用的硬盘镜像.vdi文件。</p>
 <h1 id="2、安装OpenWrt到VirtualBox"><a href="#2、安装OpenWrt到VirtualBox" class="headerlink" title="2、安装OpenWrt到VirtualBox"></a>2、安装OpenWrt到VirtualBox</h1><p>首先新建一个Linux2.6 32位的虚拟机 </p>
-<p><img src="virtualbox-install-openwrt/virtualboxnewopenwrt.jpg" alt></p>
+<p><img alt data-src="virtualbox-install-openwrt/virtualboxnewopenwrt.jpg"></p>
 <p>后面一直默认设置下一步 到虚拟硬盘这步选择“使用已有的虚拟硬盘文件”，也是就选择在准备工作中生成的openwrt.vdi。 </p>
-<p><img src="virtualbox-install-openwrt/virtualboxnewopenwrt.jpg" alt></p>
+<p><img alt data-src="virtualbox-install-openwrt/virtualboxnewopenwrt.jpg"></p>
 <p>最后点击创建按钮，虚拟机就创建好了。</p>
 <h1 id="3、配置虚拟机"><a href="#3、配置虚拟机" class="headerlink" title="3、配置虚拟机"></a>3、配置虚拟机</h1><p>在主界面选中创建好的虚拟机，点击设置按钮，在设置界面选中网络，启用网卡1和网卡2 将网卡1的连接方式设置为“Host-Only模式”，界面名称设置为VirtualBox Host-Only Ethernet Adapter 网卡2的连接方式设置为“网络地地址转换(NAT)” </p>
-<p><img src="virtualbox-install-openwrt/virtualbox_network1_setting.jpg" alt><br><img src="virtualbox-install-openwrt/virtualbox_network2_setting.jpg" alt></p>
+<p><img alt data-src="virtualbox-install-openwrt/virtualbox_network1_setting.jpg"><br><img alt data-src="virtualbox-install-openwrt/virtualbox_network2_setting.jpg"></p>
 <p>再开启一个串口，选择串口，将端口1启用</p>
-<p><img src="virtualbox-install-openwrt/virtualbox_com1_setting.jpg" alt></p>
+<p><img alt data-src="virtualbox-install-openwrt/virtualbox_com1_setting.jpg"></p>
 <p> 做完这些就可以启动虚拟机了，在VirtualBox主界面选中建立的虚拟机，点启动按钮。 在启动目录选择OpenWrt就可以进入系统了，差不多看到字幕不滚动时，记得回车，就会进入OpenWrt的终端模式。</p>
 <h3 id="TIPS："><a href="#TIPS：" class="headerlink" title="TIPS："></a>TIPS：</h3><p>这一步如果虚拟机出现Error In supR3HardenedWinReSpawn错误提示，可能是因为vboxdrv服务没有安装或没有成功启动，64位的系统经常出现这样的情况，可以找到VirtualBox的安装目录下的drivers/vboxdrv/文件夹，右键VBoxDrv.inf文件，选择安装，然后重启VirtualBox，应该就可以解决。</p>
 <h1 id="4、配置网络"><a href="#4、配置网络" class="headerlink" title="4、配置网络"></a>4、配置网络</h1><p>刚进入系统应该是不能访问网络的，需要对网络进行配置。 在OpenWrt终端输入</p>
@@ -615,6 +613,18 @@
       
 
       
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
       
       
 
@@ -950,6 +960,8 @@
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
         
+          <span id="scrollpercent"><span>0</span>%</span>
+        
       </div>
     
 
@@ -974,9 +986,13 @@
 
 
 
+  
 
 
 
+
+
+  
 
 
 
@@ -997,6 +1013,12 @@
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/lazyload/lozad.min.js?v=1.10.0"></script>
 
   
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -1043,6 +1065,15 @@
 
 
 
+
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script>
+  
+    bookmark.scrollToMark('manual', "#更多");
+  
+  </script>
 
 
 
@@ -1114,6 +1145,25 @@ window.addEventListener("message", function(e) {
 
 
 
+
+  <script>
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 14229,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  </script>
 
 
 

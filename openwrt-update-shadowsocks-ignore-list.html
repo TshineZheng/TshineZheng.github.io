@@ -60,7 +60,18 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css?v=1.0.2">
 
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
 
 
 
@@ -71,11 +82,11 @@
     scheme: 'Gemini',
     version: '7.2.0',
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     copycode: {"enable":false,"show_result":false,"style":null},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -102,13 +113,10 @@
 <meta property="og:site_name" content="Tshine&#39;s blog">
 <meta property="og:description" content="最近家里网络上优酷经常直接提示＂该视频只能在中国大陆播放＂可是我就在国内啊，想了想，应该是路由器FQ规则的原因，导致上优酷用了代理，太久没有更新过了．下面介绍下解决办法．">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.tshine.me/openwrt-update-shadowsocks-ignore-list/4599C2B7-C2A5-434E-804E-83DD8C9998D6.jpg">
-<meta property="og:image" content="http://blog.tshine.me/openwrt-update-shadowsocks-ignore-list/8BC77B30-8CD3-46F3-9D26-D1EADF666839.jpg">
 <meta property="og:updated_time" content="2019-07-27T04:20:11.868Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenWRT之$$更新ignore.list">
 <meta name="twitter:description" content="最近家里网络上优酷经常直接提示＂该视频只能在中国大陆播放＂可是我就在国内啊，想了想，应该是路由器FQ规则的原因，导致上优酷用了代理，太久没有更新过了．下面介绍下解决办法．">
-<meta name="twitter:image" content="http://blog.tshine.me/openwrt-update-shadowsocks-ignore-list/4599C2B7-C2A5-434E-804E-83DD8C9998D6.jpg">
 
 
 
@@ -336,13 +344,6 @@
     </header>
 
     
-  
-  
-
-  
-
-  <a href="https://github.com/TshineZheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
-
 
 
     <main id="main" class="main">
@@ -507,11 +508,11 @@
 <p>其实就是将之前手动输入的命令放到脚本里而已，然后给这个脚本挂上运行权限</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /etc/shadowsocks/ignore.list.update.sh</span><br></pre></td></tr></table></figure>
 
-<p>这时可以用sh ignore.list.update.sh命令执行看看有没有正确执行。<br>接下来把这个脚本设为自动执行，打开OpenWRT后台，点开 菜单-&gt;系统-&gt;计划任务<br><img src="openwrt-update-shadowsocks-ignore-list/4599C2B7-C2A5-434E-804E-83DD8C9998D6.jpg" alt></p>
+<p>这时可以用sh ignore.list.update.sh命令执行看看有没有正确执行。<br>接下来把这个脚本设为自动执行，打开OpenWRT后台，点开 菜单-&gt;系统-&gt;计划任务<br><img alt data-src="openwrt-update-shadowsocks-ignore-list/4599C2B7-C2A5-434E-804E-83DD8C9998D6.jpg"></p>
 <p> 进入计划任务II页签，点击添加按钮，在添加任务界面填写任务名称，勾选启用、每天执行，时间选择凌晨4点，任务命令选择自定义，然后输入</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh /etc/shadowsocks/ignore.list.update.sh</span><br></pre></td></tr></table></figure>
 
-<p><img src="openwrt-update-shadowsocks-ignore-list/8BC77B30-8CD3-46F3-9D26-D1EADF666839.jpg" alt></p>
+<p><img alt data-src="openwrt-update-shadowsocks-ignore-list/8BC77B30-8CD3-46F3-9D26-D1EADF666839.jpg"></p>
 <p> 保存&amp;应用 这样每天凌晨4点就会自动更新ignore.list，并重启shadowsocks。 重新打开之前报版权问题的视频，果然不再提示了，顺利解决！</p>
 
       
@@ -608,6 +609,18 @@
       
 
       
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
       
       
 
@@ -943,6 +956,8 @@
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
         
+          <span id="scrollpercent"><span>0</span>%</span>
+        
       </div>
     
 
@@ -967,9 +982,13 @@
 
 
 
+  
 
 
 
+
+
+  
 
 
 
@@ -990,6 +1009,12 @@
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/lazyload/lozad.min.js?v=1.10.0"></script>
 
   
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -1036,6 +1061,15 @@
 
 
 
+
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script>
+  
+    bookmark.scrollToMark('manual', "#更多");
+  
+  </script>
 
 
 
@@ -1107,6 +1141,25 @@ window.addEventListener("message", function(e) {
 
 
 
+
+  <script>
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 14229,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  </script>
 
 
 

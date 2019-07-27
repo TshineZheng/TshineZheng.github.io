@@ -60,7 +60,18 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css?v=1.0.2">
 
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
 
 
 
@@ -71,11 +82,11 @@
     scheme: 'Gemini',
     version: '7.2.0',
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     copycode: {"enable":false,"show_result":false,"style":null},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -102,17 +113,10 @@
 <meta property="og:site_name" content="Tshine&#39;s blog">
 <meta property="og:description" content="Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.tshine.me/hexo-setup-free-blog/hexolog.jpg">
-<meta property="og:image" content="http://blog.tshine.me/hexo-setup-free-blog/codingcreateproject.jpg">
-<meta property="og:image" content="http://blog.tshine.me/hexo-setup-free-blog/codingcreateproject1.jpg">
-<meta property="og:image" content="http://blog.tshine.me/hexo-setup-free-blog/codingoldui.jpg">
-<meta property="og:image" content="http://blog.tshine.me/hexo-setup-free-blog/codingpages.jpg">
-<meta property="og:image" content="http://blog.tshine.me/hexo-setup-free-blog/hexoconfig.jpg">
 <meta property="og:updated_time" content="2019-07-27T03:10:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用 Hexo 搭建个人免费博客">
 <meta name="twitter:description" content="Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。">
-<meta name="twitter:image" content="http://blog.tshine.me/hexo-setup-free-blog/hexolog.jpg">
 
 
 
@@ -340,13 +344,6 @@
     </header>
 
     
-  
-  
-
-  
-
-  <a href="https://github.com/TshineZheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
-
 
 
     <main id="main" class="main">
@@ -495,7 +492,7 @@
       
 
       
-        <p><img src="hexo-setup-free-blog/hexolog.jpg" alt></p>
+        <p><img alt data-src="hexo-setup-free-blog/hexolog.jpg"></p>
 <p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
 <a id="more"></a>
 
@@ -524,19 +521,19 @@
 <p><strong>注意：</strong> 该服务启动后不要关掉，这样修改文章后，只要浏览器刷新页面就可以看到最新的效果。</p>
 <h1 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h1><p>发布前需要做点其他事情，一般来说 Hexo 都是搭配 GitPage 或 CodingPage 服务，这里以 CodingPage 为例。</p>
 <h2 id="CodingPage"><a href="#CodingPage" class="headerlink" title="CodingPage"></a>CodingPage</h2><p>首先就是要<a href="https://coding.net/" target="_blank" rel="noopener">注册</a>一个 CodingPage 用户</p>
-<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><p>在网站右上角点击按钮创建一个新项目。<br><img src="hexo-setup-free-blog/codingcreateproject.jpg" alt></p>
+<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><p>在网站右上角点击按钮创建一个新项目。<br><img alt data-src="hexo-setup-free-blog/codingcreateproject.jpg"></p>
 <p>项目名称有讲究，格式为：<code>&lt;Coding用户名&gt;.coding.me</code></p>
-<p><img src="hexo-setup-free-blog/codingcreateproject1.jpg" alt></p>
+<p><img alt data-src="hexo-setup-free-blog/codingcreateproject1.jpg"></p>
 <p>点击创建即可。</p>
 <h3 id="启用-Pages-服务"><a href="#启用-Pages-服务" class="headerlink" title="启用 Pages 服务"></a>启用 Pages 服务</h3><p>这里有个坑点，Coding.net 貌似正在更新 UI，但新 UI 部分功能未做完，会有点小影响，最好先切换为旧版 UI。<em>日期：2018.10.04</em></p>
-<p><img src="hexo-setup-free-blog/codingoldui.jpg" alt></p>
-<p>切换到旧版本后，点击项目，选择刚刚创建的项目。<br>侧边栏 &gt; 代码 &gt; Pages 服务<br><img src="hexo-setup-free-blog/codingpages.jpg" alt><br>在其中启动Pages服务。</p>
+<p><img alt data-src="hexo-setup-free-blog/codingoldui.jpg"></p>
+<p>切换到旧版本后，点击项目，选择刚刚创建的项目。<br>侧边栏 &gt; 代码 &gt; Pages 服务<br><img alt data-src="hexo-setup-free-blog/codingpages.jpg"><br>在其中启动Pages服务。</p>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>打开博客目录下的<code>_config.yml</code>文件</p>
 <ol>
 <li><p>将 <code>url</code> 字段修改为你的 codingpage 地址.一般为 <code>&lt;用户名&gt;.coding.me</code></p>
 </li>
 <li><p>找到 <code>deploy</code> 段，将 coding 上的仓库地址填入（填https协议的也可），如图：</p>
-<p> <img src="hexo-setup-free-blog/hexoconfig.jpg" alt></p>
+<p> <img alt data-src="hexo-setup-free-blog/hexoconfig.jpg"></p>
 <p> 最后面 <code>master</code> 表示使用的是 master 分支.</p>
 </li>
 </ol>
@@ -641,6 +638,18 @@
       
 
       
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
       
       
 
@@ -976,6 +985,8 @@
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
         
+          <span id="scrollpercent"><span>0</span>%</span>
+        
       </div>
     
 
@@ -1000,9 +1011,13 @@
 
 
 
+  
 
 
 
+
+
+  
 
 
 
@@ -1023,6 +1038,12 @@
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/lazyload/lozad.min.js?v=1.10.0"></script>
 
   
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -1069,6 +1090,15 @@
 
 
 
+
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script>
+  
+    bookmark.scrollToMark('manual', "#更多");
+  
+  </script>
 
 
 
@@ -1140,6 +1170,25 @@ window.addEventListener("message", function(e) {
 
 
 
+
+  <script>
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 14229,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  </script>
 
 
 
