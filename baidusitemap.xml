@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://blog.tshine.me/manjaro-install-and-setup.html</loc>
-    <lastmod>2019-07-27</lastmod>
+    <loc>http://blog.tshine.me/java-character-code.html</loc>
+    <lastmod>2019-07-30</lastmod>
   </url>  <url>
-    <loc>http://blog.tshine.me/wordpress-auto-full-width-character.html</loc>
+    <loc>http://blog.tshine.me/manjaro-install-and-setup.html</loc>
+    <lastmod>2019-07-30</lastmod>
+  </url>  <url>
+    <loc>http://blog.tshine.me/centos6-wordpress-setup.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
     <loc>http://blog.tshine.me/gravatar-load-failed.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
-    <loc>http://blog.tshine.me/centos6-wordpress-setup.html</loc>
+    <loc>http://blog.tshine.me/wordpress-auto-full-width-character.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
     <loc>http://blog.tshine.me/centos6-wordpress-environment-setup.html</loc>
@@ -22,25 +25,25 @@
     <loc>http://blog.tshine.me/wordpress-install-codecolorer.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
-    <loc>http://blog.tshine.me/wordpress-issues.html</loc>
+    <loc>http://blog.tshine.me/wordpress-optimization.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
-    <loc>http://blog.tshine.me/wordpress-optimization.html</loc>
+    <loc>http://blog.tshine.me/wordpress-issues.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
     <loc>http://blog.tshine.me/wordpress-thread-comment-commentformid.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
-    <loc>http://blog.tshine.me/openwrt-cc15-change-opkg-conf.html</loc>
-    <lastmod>2019-07-27</lastmod>
-  </url>  <url>
     <loc>http://blog.tshine.me/openwrt-barrierbreaker-install-svn.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
-    <loc>http://blog.tshine.me/openwrt-compile.html</loc>
+    <loc>http://blog.tshine.me/openwrt-cc15-change-opkg-conf.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
     <loc>http://blog.tshine.me/openwrt-update-shadowsocks-ignore-list.html</loc>
+    <lastmod>2019-07-27</lastmod>
+  </url>  <url>
+    <loc>http://blog.tshine.me/openwrt-compile.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
     <loc>http://blog.tshine.me/cocos2dx-use-dragonbones-outdated.html</loc>
@@ -61,10 +64,10 @@
     <loc>http://blog.tshine.me/macos10.9.4-install-log.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
-    <loc>http://blog.tshine.me/seafile-auto-start-failed.html</loc>
+    <loc>http://blog.tshine.me/mi-router-shadowsocks-redsocks2.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
-    <loc>http://blog.tshine.me/mi-router-shadowsocks-redsocks2.html</loc>
+    <loc>http://blog.tshine.me/seafile-auto-start-failed.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
     <loc>http://blog.tshine.me/ubuntu14-04-64-install-ia32-libs.html</loc>
@@ -73,16 +76,16 @@
     <loc>http://blog.tshine.me/skynet-sample-client.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
-    <loc>http://blog.tshine.me/virtualbox-install-openwrt.html</loc>
-    <lastmod>2019-07-27</lastmod>
-  </url>  <url>
     <loc>http://blog.tshine.me/skynet-sample-server.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
-    <loc>http://blog.tshine.me/linux-tools-and-command.html</loc>
+    <loc>http://blog.tshine.me/virtualbox-install-openwrt.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
     <loc>http://blog.tshine.me/how-to-use-sshkey.html</loc>
+    <lastmod>2019-07-27</lastmod>
+  </url>  <url>
+    <loc>http://blog.tshine.me/linux-tools-and-command.html</loc>
     <lastmod>2019-07-27</lastmod>
   </url>  <url>
     <loc>http://blog.tshine.me/android-logcat-failed.html</loc>
