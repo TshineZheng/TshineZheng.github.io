@@ -106,14 +106,14 @@
 </script>
 
   <meta name="description" content="如果经常和远程服务器打交道想必对 SSH 不会陌生，比如 Linux 服务器、Github 等，出于方便管理和安全的考虑，一般会选择使用 SSH Key 的方式进行登录，可以极大的提升认证体验。">
-<meta name="keywords" content="Linux,SSH,SSH key,Github">
+<meta name="keywords" content="SSH,SSH key,Github,Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSH Key 的使用">
 <meta property="og:url" content="http://blog.tshine.me/how-to-use-sshkey.html">
 <meta property="og:site_name" content="Tshine&#39;s blog">
 <meta property="og:description" content="如果经常和远程服务器打交道想必对 SSH 不会陌生，比如 Linux 服务器、Github 等，出于方便管理和安全的考虑，一般会选择使用 SSH Key 的方式进行登录，可以极大的提升认证体验。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-27T04:20:11.845Z">
+<meta property="og:updated_time" content="2020-02-19T06:37:27.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH Key 的使用">
 <meta name="twitter:description" content="如果经常和远程服务器打交道想必对 SSH 不会陌生，比如 Linux 服务器、Github 等，出于方便管理和安全的考虑，一般会选择使用 SSH Key 的方式进行登录，可以极大的提升认证体验。">
@@ -499,8 +499,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"admin@host"</span></span><br></pre></td></tr></table></figure>
 
 <p>其中 <code>admin@host</code> 是你的用户名。<br>一般这时会提示你输入要保存的sshkey的文件名，或直接回车使用默认的名字保存，还会要求输入密码，操作同上。<br>保存完成后，打开 <code>~/.ssh</code> 文件夹可以看到<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件。<br><em>Windows 用户保存在<code>C:\Users\xxx\.ssh</code>文件夹下。</em></p>
-<h1 id="远程-SSH-配置"><a href="#远程-SSH-配置" class="headerlink" title="远程 SSH 配置"></a>远程 SSH 配置</h1><p>上面生成的两个文件，其中 <code>id_rsa</code> 为私钥文件，<code>id_rsa.pub</code> 为公钥，一般配置到远程 SSH 上需要用到的就是公钥，私钥一定要自己保存好，不要泄露。</p>
-<h2 id="Linux-SSH-配置"><a href="#Linux-SSH-配置" class="headerlink" title="Linux SSH 配置"></a>Linux SSH 配置</h2><p>这里假设服务器用户名为<code>user</code>，服务器 ip 为 <code>5.5.5.5</code>，准备将公钥文件上传到 <code>/root</code> 目录下，并命名为 <code>client_id_rsa.pub</code>。</p>
+<h1 id="远程服务器-SSH-配置"><a href="#远程服务器-SSH-配置" class="headerlink" title="远程服务器 SSH 配置"></a>远程服务器 SSH 配置</h1><p>上面生成的两个文件，其中 <code>id_rsa</code> 为私钥文件，<code>id_rsa.pub</code> 为公钥，一般配置到远程 SSH 上需要用到的就是公钥，私钥一定要自己保存好，不要泄露。<br>有两种方式配置进行远程 SSH 配置。</p>
+<h2 id="手动配置"><a href="#手动配置" class="headerlink" title="手动配置"></a>手动配置</h2><p>这里假设服务器用户名为<code>user</code>，服务器 ip 为 <code>5.5.5.5</code>，准备将公钥文件上传到 <code>/root</code> 目录下，并命名为 <code>client_id_rsa.pub</code>。</p>
 <h3 id="将公钥上传到服务器"><a href="#将公钥上传到服务器" class="headerlink" title="将公钥上传到服务器"></a>将公钥上传到服务器</h3><p>在<strong>本地</strong>将公钥上传到目标服务器，这里用的是 scp 命令进行文件传输，也可以通过其他工具上传到服务器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp id_rsa.pub user@5.5.5.5:/root/client_id_rsa.pub</span><br></pre></td></tr></table></figure>
 
@@ -511,15 +511,22 @@
 </li>
 <li><p>将公钥导入</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat client_id_rsa.pub &gt;&gt;~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
 </li>
-<li><p>测试</p>
-<ul>
-<li><p>Windows<br>私钥导入到 Xshell 或 putty 中，新建立一个连接使用 SSH key 的方式认证，进行测试</p>
+</ol>
+<h2 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h2><p>在本机通过 <code>ssh-copy-id</code> 命令进行远程配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id -i .ssh/id_rsa.pub 服务器用户名@IP</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意: ssh-copy-id 将key写到远程机器的 ~/ .ssh/authorized_key.文件中</p>
+</blockquote>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><ul>
+<li><p>Windows<br>  私钥导入到 Xshell 或 putty 中，新建立一个连接使用 SSH key 的方式认证，进行测试</p>
 </li>
 <li><p>Linux<br>  编辑<code>~/.ssh/config</code>文件，加入</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Host 名称(自己决定，方便输入记忆的)</span><br><span class="line">HostName 主机名</span><br><span class="line">User 登录的用户名</span><br><span class="line">Port 服务器ssh端口号</span><br><span class="line">    </span><br><span class="line">Host vps2</span><br><span class="line">HostName xxx.xxx.xxx.xxx</span><br><span class="line">User root</span><br><span class="line">Port 22</span><br></pre></td></tr></table></figure>
 
-<p>  以上保存后，在终端输入 <code>ssh host名称</code> 即可链接对应的服务器。比如要链接以上配置中的vps2:</p>
+<p>  以上保存后，在终端输入 <code>ssh host名称</code> 即可链接对应的服务器。比如要链接以上配置中vps2:</p>
   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh vps2</span><br></pre></td></tr></table></figure>
 
 <p>  如果要传输文件可以这样：</p>
@@ -527,9 +534,10 @@
 
 </li>
 </ul>
-</li>
-</ol>
-<h2 id="Github-SSH-配置"><a href="#Github-SSH-配置" class="headerlink" title="Github SSH 配置"></a>Github SSH 配置</h2><ol>
+<blockquote>
+<p>也可以直接运行 <code>ssh 用户名@IP</code> 的方式登录。</p>
+</blockquote>
+<h1 id="Github-SSH-配置"><a href="#Github-SSH-配置" class="headerlink" title="Github SSH 配置"></a>Github SSH 配置</h1><ol>
 <li><p>本地配置<br> 编辑<code>~/.ssh/config</code>文件，加入以下内容，如果没有就新建一个</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    IdentityFile C:\Users\xxx\.ssh\id_rsa</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    User xxx@xxx.com</span><br></pre></td></tr></table></figure>
 
@@ -545,7 +553,7 @@
 
 </li>
 </ol>
-<h2 id="多个-SSH-Key-管理"><a href="#多个-SSH-Key-管理" class="headerlink" title="多个 SSH Key 管理"></a>多个 SSH Key 管理</h2><p>当需要连接多个服务器时，或同时连接 Github 和 Coding.net ，使用的是不同的 SSH key时，就需要对本地 SSH key 进行管理配置。<br>其实上面的 Github 配置已经用到了相关操作，只要在<code>~/.ssh/config</code>里配置对应的 HostName 和 所使用的 publickey 即可，例如：</p>
+<h1 id="多个-SSH-Key-管理"><a href="#多个-SSH-Key-管理" class="headerlink" title="多个 SSH Key 管理"></a>多个 SSH Key 管理</h1><p>当需要连接多个服务器时，或同时连接 Github 和 Coding.net ，使用的是不同的 SSH key时，就需要对本地 SSH key 进行管理配置。<br>其实上面的 Github 配置已经用到了相关操作，只要在<code>~/.ssh/config</code>里配置对应的 HostName 和 所使用的 publickey 即可，例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    IdentityFile C:\Users\xxx\.ssh\id_rsa</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    User xxx@xxx.com</span><br><span class="line"></span><br><span class="line">Host coding.net</span><br><span class="line">    HostName coding.net</span><br><span class="line">    IdentityFile C:\Users\xxx\.ssh\id_rsa_coding</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    User xxx@xxx.com</span><br></pre></td></tr></table></figure>
 
 <p>注意这里 Github 和 Coding 使用了不同的key（此处要填私钥），分别为<code>id_rsa</code>和<code>id_rsa_coding</code>，这也意味着上面配置的路径中要存在这两个私钥文件。</p>
@@ -640,13 +648,13 @@
         
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
-          
             <a href="/tags/SSH/" rel="tag"># SSH</a>
           
             <a href="/tags/SSH-key/" rel="tag"># SSH key</a>
           
             <a href="/tags/Github/" rel="tag"># Github</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
         </div>
       
@@ -924,7 +932,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#生成-SSH-KEY"><span class="nav-number">1.</span> <span class="nav-text">生成 SSH KEY</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#远程-SSH-配置"><span class="nav-number">2.</span> <span class="nav-text">远程 SSH 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-SSH-配置"><span class="nav-number">2.1.</span> <span class="nav-text">Linux SSH 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将公钥上传到服务器"><span class="nav-number">2.1.1.</span> <span class="nav-text">将公钥上传到服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将公钥导入服务器认证库"><span class="nav-number">2.1.2.</span> <span class="nav-text">将公钥导入服务器认证库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-SSH-配置"><span class="nav-number">2.2.</span> <span class="nav-text">Github SSH 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个-SSH-Key-管理"><span class="nav-number">2.3.</span> <span class="nav-text">多个 SSH Key 管理</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#生成-SSH-KEY"><span class="nav-number">1.</span> <span class="nav-text">生成 SSH KEY</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#远程服务器-SSH-配置"><span class="nav-number">2.</span> <span class="nav-text">远程服务器 SSH 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#手动配置"><span class="nav-number">2.1.</span> <span class="nav-text">手动配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将公钥上传到服务器"><span class="nav-number">2.1.1.</span> <span class="nav-text">将公钥上传到服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将公钥导入服务器认证库"><span class="nav-number">2.1.2.</span> <span class="nav-text">将公钥导入服务器认证库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动配置"><span class="nav-number">2.2.</span> <span class="nav-text">自动配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Github-SSH-配置"><span class="nav-number">4.</span> <span class="nav-text">Github SSH 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多个-SSH-Key-管理"><span class="nav-number">5.</span> <span class="nav-text">多个 SSH Key 管理</span></a></li></ol></div>
             
 
           </div>
@@ -945,7 +953,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2011 – <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2011 – <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
